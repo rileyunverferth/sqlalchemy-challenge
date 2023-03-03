@@ -15,7 +15,7 @@ engine = create_engine("sqlite:///Resources/hawaii.sqlite")
 Base = automap_base()
 
 # reflect the tables
-Base.prepare(autoload_with=engine)
+Base.prepare(engine=engine, reflect=True)
 
 # Save references to each table
 measurement = Base.classes.measurement
@@ -41,6 +41,11 @@ def home():
 def precipitation():
     # Create our session (link) from Python to the DB
     session = Session(engine)
+
+    date = session.query(measurement.date).filter(measurement.date >= '2016-08-23').order_by(measurement.date).all()
+    precipitation = session.query(measurement.prcp).filter(measurement.date >= '2016-08-23').order_by(measurement.date).all()
+    
+
 
 
 
